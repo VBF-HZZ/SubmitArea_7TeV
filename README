@@ -1,0 +1,55 @@
+#########################################
+#                                       #
+#     UF Higgs Analyzer Submit Area     #
+#                                       #
+#     Author: Matt Snowball             #
+#     Last Update: 03.10.2014           #
+#                                       #
+#########################################
+
+The analyzer release should be created separately from the pattuplizer release due to differences in some packages needed, 
+but the process of setting it up is very similar. Again there are two separate releases for 7 and 8 TeV, here we look at the 8 TeV release.
+
+1.
+	$ cmsrel CMSSW_5_3_9_patch3
+	$ cd CMSSW_5_3_9_patch3/src
+	$ cmsenv
+	$ git clone git@github.com:VBF-HZZ/UFHZZAnalysis8TeV.git
+	$ cp UFHZZAnalysis8TeV/Utilities/installPackages.py  ./
+	$ cp UFHZZAnalysis8TeV/Utilities/packages_src.txt ./
+	$ python installPackages.py 
+	$ scram b -j12
+
+2. Next, we need to setup the SubmitArea. ***Make sure this directory is just above CMSSW_5_3_9_patch3.***
+
+	#continued from step 1
+	$ cd ../../
+	$ git clone git@github.com:VBF-HZZ/SubmitArea_8TeV.git
+	$ cd SubmitArea_8TeV
+
+In this directory, you will find several files
+
+-listPatTuples.sh is used to list the files on the T2 that have come from the pattuplizer.
+-Create_*_cfg.sh are used to create Submission directories in the proper format.
+-submitFile.pbs.sh is the pbs script that will run when you submit to the HPC.
+-Submit.sh is the script you will use to submit a Submission directory to run on the HPC.
+-bin/ directory contains exe's that grab important info, such as cross section, 
+ of the datasets when you run Create_*_cfg.sh scripts. The source for this is /cms/data/store/user/snowball/CrossSectionList.txt
+
+This is how you would create analyzer submission directories after the output from the first section was done.
+
+	$ ./listPatTuples.sh data/53X/Legacy_01.10/2012A    #will create patTuples directory
+	$ mv patTuples Data_2012A
+	$ ./Create_DATA_2012_cfg.sh Data_2012A #creates Submission_Data_2012A directory
+
+Now check your submitFile.pbs.sh to make sure you have enough time and memory set for your job. Knowing this will only come with experience.
+	
+	$ ./Submit.sh Submission_Data_2012A #submits to the HPC
+
+NOTE: We cannot compile CMSSW on the HPC as of now due to EL6 incompatibility with CMSSW versions. 
+      Once we have slc6 SCRAM_ARCH CMSSW versions, we can go back to compiling on HPC. 
+      Until then you have to make the release and compile on IHEPAs, then scp (or use /scratch/osghpc cross mounted disc) 
+      the release to the HPC. When the job runs, it will edmPluginRefresh using the libraries anyway.
+
+
+Once your jobs are done, they will return the output to results_Data_2012A where you can hadd them together or do as you please.
