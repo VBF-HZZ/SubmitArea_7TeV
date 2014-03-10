@@ -8,15 +8,15 @@
 #########################################
 
 The analyzer release should be created separately from the pattuplizer release due to differences in some packages needed, 
-but the process of setting it up is very similar. Again there are two separate releases for 7 and 8 TeV, here we look at the 8 TeV release.
+but the process of setting it up is very similar. Again there are two separate releases for 7 and 8 TeV, here we look at the 7 TeV release.
 
 1.
-	$ cmsrel CMSSW_5_3_9_patch3
-	$ cd CMSSW_5_3_9_patch3/src
+	$ cmsrel CMSSW_4_4_5
+	$ cd CMSSW_4_4_5/src
 	$ cmsenv
-	$ git clone git@github.com:VBF-HZZ/UFHZZAnalysis8TeV.git
-	$ cp UFHZZAnalysis8TeV/Utilities/installPackages.py  ./
-	$ cp UFHZZAnalysis8TeV/Utilities/packages_src.txt ./
+	$ git clone git@github.com:VBF-HZZ/UFHZZAnalysis7TeV.git
+	$ cp UFHZZAnalysis7TeV/Utilities/installPackages.py  ./
+	$ cp UFHZZAnalysis7TeV/Utilities/packages_src.txt ./
 	$ python installPackages.py 
 	$ scram b -j12
 
@@ -24,8 +24,8 @@ but the process of setting it up is very similar. Again there are two separate r
 
 	#continued from step 1
 	$ cd ../../
-	$ git clone git@github.com:VBF-HZZ/SubmitArea_8TeV.git
-	$ cd SubmitArea_8TeV
+	$ git clone git@github.com:VBF-HZZ/SubmitArea_7TeV.git
+	$ cd SubmitArea_7TeV
 
 In this directory, you will find several files
 
@@ -38,13 +38,13 @@ In this directory, you will find several files
 
 This is how you would create analyzer submission directories after the output from the first section was done.
 
-	$ ./listPatTuples.sh data/53X/Legacy_01.10/2012A    #will create patTuples directory
-	$ mv patTuples Data_2012A
-	$ ./Create_DATA_2012_cfg.sh Data_2012A #creates Submission_Data_2012A directory
+	$ ./listPatTuples.sh data/44X/Legacy_01.10/JanA_Jul1    #will create patTuples directory
+	$ mv patTuples Data_JanA_Jul1
+	$ ./Create_DATA_JanA_cfg.sh Data_JanA_Jul1 #creates Submission_Data_JanA_Jul1 directory
 
 Now check your submitFile.pbs.sh to make sure you have enough time and memory set for your job. Knowing this will only come with experience.
 	
-	$ ./Submit.sh Submission_Data_2012A #submits to the HPC
+	$ ./Submit.sh Submission_Data_JanA_Jul1 #submits to the HPC
 
 NOTE: We cannot compile CMSSW on the HPC as of now due to EL6 incompatibility with CMSSW versions. 
       Once we have slc6 SCRAM_ARCH CMSSW versions, we can go back to compiling on HPC. 
