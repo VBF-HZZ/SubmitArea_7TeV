@@ -5,7 +5,7 @@
 #PBS -o outFiles/${jobName}.out                          
 #PBS -e errFiles/${jobName}.err                                       
 #PBS -m a                                                
-#PBS -M snowball@phys.ufl.edu                            
+#PBS -M lihengne@gmail.com                           
              
 ##Job Configuration                                         
                                                                                                                      
