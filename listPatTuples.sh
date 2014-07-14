@@ -3,8 +3,10 @@
 
 numberOfJobsPerDataset=5
 
+storedir=/cms/data/store/user/snowball
+
 if [ -z "$1" ]; then 
-    echo "Please pass a directory on the T2! (from /cms/data/store/user/snowball/)"
+    echo "Please pass a directory on the T2! (wrt. ${storedir}/)"
     exit 1;
 fi
 
@@ -17,7 +19,7 @@ if [ ! -d $listDir ]; then
 fi
 
 
-cd /cms/data/store/user/snowball/$1
+cd ${storedir}/$1
 
 jobCounter=0
 
