@@ -1,10 +1,13 @@
-#!/bin/bash
+#!/bin/sh
 
-for i in *.err
-  do 
+echo "Following jobs have problem: "
 
-  echo $i
-  cat $i | grep FatalRootError
-
+for file in errFiles/*.err
+do 
+  error=`grep FatalRootError $file`
+  if [ "$error" != "" ]; then
+    echo $file
+   # echo "  Error: $error" 
+  fi
 done
 
