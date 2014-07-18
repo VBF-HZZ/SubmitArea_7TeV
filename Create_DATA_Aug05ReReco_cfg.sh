@@ -1,6 +1,6 @@
 #!/bin/bash             
 
-JobsPerDataset=1
+JobsPerDataset=5
 
 if [ "$1" == "" ]; then 
     echo "Please pass a dir with txt files for datasets to be processed!"
