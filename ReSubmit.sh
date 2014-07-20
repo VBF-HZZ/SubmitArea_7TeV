@@ -1,34 +1,37 @@
 #!/bin/bash
 
 
+sublist=$1
 
-
-if [ "$1" == "" ]; then
+if [ "$sublist" == "" ]; then
     echo "Please pass an Submission list file!"
     exit 1;
 fi
 
-appendName=${1#*Submission_}
-outDir=results_${appendName}
 
 if [ -d $outDir ]; then
     echo "results directory exists!"
-    exit 1;
 else
     mkdir $outDir
-if [[ ! -d outFiles ]]; then mkdir outFiles; fi;
-if [[ ! -d errFiles ]]; then mkdir errFiles; fi;
 fi
 
+if [[ ! -d outFiles ]]; then mkdir outFiles; fi;
+if [[ ! -d errFiles ]]; then mkdir errFiles; fi;
 
-submitDir=$1
+
+
 curDir=`pwd`
 
-for f in $(cat ${submitDir})
+for f in $(cat ${sublist})
   do
 
-  f2=${f#${submitDir}/}
-  NAME=${f2%%.py*}
+  submitDir=`dirname $f`
+
+  appendName=${submitDir#*Submission_}
+  outDir=results_${appendName}
+
+  NAME=`basename $f .py`
+  f2=`basename $f`
 
   echo ${NAME}
   
