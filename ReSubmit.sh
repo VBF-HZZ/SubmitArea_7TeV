@@ -35,6 +35,6 @@ for f in $(cat ${sublist})
 
   echo ${NAME}
   
-  qsub -v curDir=${curDir},submitDir=${submitDir},cfgFile=${f2},outDir=${outDir} -N "$NAME" submitFile.pbs.sh
+  qsub -v jobName=${NAME},curDir=${curDir},submitDir=${submitDir},cfgFile=${f2},outDir=${outDir} -N "$NAME" submitFile.pbs.sh
   
 done

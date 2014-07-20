@@ -113,7 +113,7 @@ process.source = cms.Source(\"PoolSource\",
                              fileNames = myfilelist)
 
 process.TFileService = cms.Service(\"TFileService\",
-                                   fileName = cms.string(\""${txtFile}_${IJOB}".root\")
+                                   fileName = cms.string(\""${txtFile}_$(( IJOB - 1 ))".root\")
                                    )
 
 process.Ana = cms.EDAnalyzer('UFHZZ4LAna',

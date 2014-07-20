@@ -1,7 +1,7 @@
 #!/bin/sh
 
 list=""
-list="${list} Submission_HZZSamples_test "
+list="${list} Submission_HZZSamples_test2 "
 
 for f in $list ;
 do

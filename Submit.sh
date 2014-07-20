@@ -30,8 +30,9 @@ for f in $(ls ${submitDir}/*.py)
   f2=${f#${submitDir}/}
   NAME=${f2%%.py*}
 
-  echo ${NAME}
-  
+  echo ${NAME}  
+
   qsub -v jobName=${NAME},curDir=${curDir},submitDir=${submitDir},cfgFile=${f2},outDir=${outDir} -N "$NAME" submitFile.pbs.sh
-  
+
 done
+
